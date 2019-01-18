@@ -1,9 +1,0 @@
----
-- name: Get DB2 Services
-  hosts: db2dev.ifmssystem.com
-  tasks: 
-
-    - name: list the DB2 services
-      script: GetDB2Services.ps1
-      register: rc
-...
