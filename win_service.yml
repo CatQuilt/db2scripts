@@ -1,0 +1,23 @@
+---
+ - name: Install db2Dev
+   hosts: db2dev.ifmssystem.com
+   tasks: 
+
+    - name: Ensure that the DB2 Management Service logs on as db2admin
+      win_service:
+        name: db2mgmtsvc_c1
+        username: .\db2admin
+        password: "{{ pword }}"       
+
+    - name: Ensure that the DB2 IC Service logs on as db2admin
+      win_service:
+        name: DB2ICSERVER_v105
+        username: .\db2admin
+        password: "{{ pword }}"      
+
+    - name: Ensure that the DB2 License Service logs on as db2admin
+      win_service:
+        name: DB2LICD_C1
+        username: .\db2admin
+        password: "{{ pword }}"               
+...

@@ -1,0 +1,9 @@
+- name: Download file to specified path
+  hosts: db2dev.ifmssystem.com
+  tasks: 
+  
+  - name: copy files from SVN to db server
+    win_get_url:
+      url: 'http://subd/repo/IFMS/Platform/IaC/DB2_Install_Artifacts/DB2DEV/DB2DEV_1055_V6A.rsp'
+      dest: 'D:\TEMP\DB2DEV_1055_V6A.RSP'
+...

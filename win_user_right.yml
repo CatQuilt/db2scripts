@@ -1,0 +1,47 @@
+---
+- name: Ensure db2admin has correct user rights
+  hosts: db2dev.ifmssystem.com
+  tasks: 
+   
+    - name: step 1
+      win_user_right:
+        name: SeTcbPrivilege
+        users:
+        - .\db2admin
+        action: add
+
+    - name: step 2
+      win_user_right:
+        name: SeIncreaseQuotaPrivilege
+        users:
+        - .\db2admin
+        action: add
+
+    - name: step 3
+      win_user_right:
+        name: SeCreateTokenPrivilege
+        users:
+        - .\db2admin
+        action: add
+
+    - name: step 4
+      win_user_right:
+        name: SeLockMemoryPrivilege
+        users:
+        - .\db2admin
+        action: add
+
+    - name: step 5
+      win_user_right:
+        name: SeServiceLogonRight
+        users:
+        - .\db2admin
+        action: add
+
+    - name: step 6
+      win_user_right:
+        name: SeAssignPrimaryTokenPrivilege
+        users:
+        - .\db2admin
+        action: add
+                

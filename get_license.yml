@@ -1,0 +1,26 @@
+---
+ - name: preinstall db2Dev
+   hosts: db2dev.ifmssystem.com
+   tasks: 
+
+### -- create the directory structures needed for the install ---  
+### -- this is just the test for the install of the license.
+### -- it will really reside in preinstall_setup.yml    
+      
+    - name: Create license directory
+      win_file: 
+        path: D:\DB2_LICENSE
+        state: directory    
+        
+    - name: Remote DB2 license from Filer
+      win_copy:
+        src: \\192.168.1.8\Software\Applications\DB2\DB2_10.5\DB2_10.5_dev_license\DB2_DE_QS_Activation_10.5.0.1.zip
+        dest: D:\DB2_LICENSE\DB2_DE_QS_Activation_10.5.0.1.zip
+        remote_src: yes
+        
+    - name: unzip the license file
+      win_unzip:
+        src: D:\DB2_LICENSE\DB2_DE_QS_Activation_10.5.0.1.zip
+        dest: D:\DB2_LICENSE
+                 
+...

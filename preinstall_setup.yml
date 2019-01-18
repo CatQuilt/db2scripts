@@ -1,0 +1,88 @@
+---
+ - name: preinstall db2Dev
+   hosts: db2dev.ifmssystem.com
+   tasks: 
+
+### -- create the directory structures needed for the install ---      
+      
+    - name: Create DB2_ADMIN directory
+      win_file: 
+        path: D:\DB2_ADMIN
+        state: directory        
+        
+    - name: Create DB2_INSTALL directory
+      win_file: 
+        path: D:\DB2_ADMIN\DB2_INSTALL
+        state: directory       
+        
+    - name: Create Powershell directory
+      win_file: 
+        path: D:\DB2_ADMIN\DB2_INSTALL\Powershell
+        state: directory 
+
+    - name: Create RESPONSE directory
+      win_file: 
+        path: D:\DB2_ADMIN\DB2_INSTALL\RESPONSE
+        state: directory    
+        
+    - name: Create OUTPUT directory
+      win_file: 
+        path: D:\DB2_ADMIN\OUTPUT
+        state: directory    
+        
+    - name: Create SQL directory
+      win_file: 
+        path: D:\DB2_ADMIN\SQL
+        state: directory    
+        
+    - name: Create software directory
+      win_file: 
+        path: D:\DB2_SOFTWARE
+        state: directory    
+        
+    - name: Create license directory
+      win_file: 
+        path: D:\DB2_LICENSE
+        state: directory    
+        
+    - name: Create TEMP directory
+      win_file: 
+        path: D:\TEMP
+        state: directory  
+
+    ##### note that the db2 install exe file is renamed to zip during the copy 
+    - name: Remote copy server.exe from Filer
+      win_copy:
+        src: \\192.168.1.8\Software\Applications\DB2\DB2_10.5\DB2_10.5FP5_BASE_install\v10.5fp5_ntx64_server_t.exe
+        dest: D:\DB2_SOFTWARE\v10.5fp5_ntx64_server_t.zip
+        remote_src: yes
+
+    ##### note that the db2 install exe file is renamed to zip during the copy 
+    - name: Remote copy iirw.exe from Filer
+      win_copy:
+        src: \\192.168.1.8\Software\Applications\DB2\DB2_10.5\DB2_10.5FP5_BASE_install\v10.5fp5_ntx64_iirw.exe
+        dest: D:\DB2_SOFTWARE\v10.5fp5_ntx64_iirw.zip
+        remote_src: yes
+        
+    - name: Remote DB2 license from Filer
+      win_copy:
+        src: \\192.168.1.8\Software\Applications\DB2\DB2_10.5\DB2_10.5_dev_license\DB2_DE_QS_Activation_10.5.0.1.zip
+        dest: D:\DB2_LICENSE\DB2_DE_QS_Activation_10.5.0.1.zip
+        remote_src: yes
+        
+    - name: unzip the server zip file (renamed from exe file)
+      win_unzip:
+        src: D:\DB2_SOFTWARE\v10.5fp5_ntx64_server_t.zip
+        dest: D:\DB2_SOFTWARE\SERVER_T        
+
+    - name: unzip the iirw exe file
+      win_unzip:
+        src: D:\DB2_SOFTWARE\v10.5fp5_ntx64_iirw.zip
+        dest: D:\DB2_SOFTWARE\IIRW
+        
+    - name: unzip the license file
+      win_unzip:
+        src: D:\DB2_LICENSE\DB2_DE_QS_Activation_10.5.0.1.zip
+        dest: D:\DB2_LICENSE
+                 
+...

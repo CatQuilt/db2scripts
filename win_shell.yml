@@ -1,0 +1,26 @@
+---
+ - name: Utility tasks on the host db2Dev
+   hosts: db2dev.ifmssystem.com
+   tasks: 
+    - name: List the files
+      win_find:
+        paths:
+        - C:\
+
+    - name: Remote copy from Filer   
+        win_shell: Copy-Item "\\192.168.1.8\\filer\\temp\\warning banner.txt" C:\Temp
+          become: yes
+          become_method: runas
+          become_use: IFMS\zzfredewi
+          vars:
+            ansible_become_password: "Autumn2018!Autumn2018Autumn"
+
+
+    - name: confirm the file was copied
+      win_find:
+        paths: C:\Temp\warning banner.txt.pdf
+
+     
+
+    
+
