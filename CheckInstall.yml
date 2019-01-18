@@ -1,0 +1,27 @@
+---
+- name: Confirm that install is complete
+  hosts: db2dev.ifmssystem.com
+  tasks:
+  
+    # - name: Send message
+      # win_msg:
+        # to: ifms\zzflatlly
+        # msg: About to wait
+        
+    - name: wait for 5 minutes
+      win_wait_for:
+        timeout: 300
+
+    # - name: Send message
+      # win_msg:
+        # to: ifms\zzflatlly
+        # msg: Done waiting
+ 
+    - name: Find file
+      script: TestPath.ps1
+      register: path_result
+      failed_when: path_result.stdout != "The file exists\r\n"
+      
+    - debug: 
+        var: path_result.stdout      
+
